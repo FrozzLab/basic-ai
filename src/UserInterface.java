@@ -21,7 +21,7 @@ public class UserInterface {
                     > The desired number of clusters;
                     > Name of the file with the csv dataset;
                                         
-                    --- Note --- The aforementioned files have to be placed in
+                    --- Note --- The aforementioned file has to be placed in
                                  the "data" directory for the program to work.""");
         }
         else {
@@ -66,8 +66,8 @@ public class UserInterface {
             System.out.println("\nCluster " + i + ":\n");
 
             for (Map.Entry<String, Integer> typeOccurenceEntry : typeOccurrenceMap.entrySet()) {
-                System.out.printf("%s: %.2f%% %d %n", typeOccurenceEntry.getKey(),
-                        typeOccurenceEntry.getValue() / sampleSetSize * 100, typeOccurenceEntry.getValue());
+                System.out.printf("%s(%d): %.2f%% %n", typeOccurenceEntry.getKey(), typeOccurenceEntry.getValue(),
+                        typeOccurenceEntry.getValue() / sampleSetSize * 100);
             }
         }
     }
@@ -92,7 +92,7 @@ public class UserInterface {
                 List<Double> currDistanceList = new ArrayList<>();
 
                 for (Cluster cluster : clusters) {
-                    currDistanceList.add(sample.calculateEuclidianDistance(cluster.getCentroid(), sample));
+                    currDistanceList.add(sample.calculateEuclidianDistance(cluster.getCentroid()));
                 }
 
                 double minDistance = Collections.min(currDistanceList);

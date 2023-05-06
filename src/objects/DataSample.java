@@ -16,13 +16,11 @@ public class DataSample {
     }
 
 
-    public double calculateEuclidianDistance (List<Double> centroid, DataSample sample) {
-        List<Double> centroidVector = new ArrayList<>(centroid);
-        List<Double> sampleVector = new ArrayList<>(sample.getInputVector());
+    public double calculateEuclidianDistance (List<Double> centroid) {
         double preRootSum = 0.0;
 
-        for (int i = 0; i < centroidVector.size(); i++)
-            preRootSum += Math.pow((centroidVector.get(i) - sampleVector.get(i)), 2);
+        for (int i = 0; i < centroid.size(); i++)
+            preRootSum += Math.pow((centroid.get(i) - inputVector.get(i)), 2);
 
         return Math.sqrt(preRootSum);
     }
