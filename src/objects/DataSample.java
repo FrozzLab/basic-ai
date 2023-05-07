@@ -19,11 +19,6 @@ public class DataSample {
     }
 
 
-    public int getInputVectorSize() {
-        return inputVector.size();
-    }
-
-
     public List<String> getInputVector() {
         return inputVector;
     }

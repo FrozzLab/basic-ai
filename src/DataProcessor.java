@@ -9,7 +9,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DataProcessor {
-
     public static List<DataSample> parseDataFromCsv(String filePath) {
         List<DataSample> parsedSamples = new ArrayList<>();
 
@@ -29,7 +28,6 @@ public class DataProcessor {
         List<String> parametersAsString = new ArrayList<>(List.of(line.split(",")));
 
         String decisionParameterAsString = parametersAsString.get(0);
-
         parametersAsString.remove(0);
 
         return new DataSample(parametersAsString, decisionParameterAsString);

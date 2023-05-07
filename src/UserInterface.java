@@ -8,15 +8,13 @@ public class UserInterface {
     static List<DataSample> testDataSamples = new ArrayList<>();
 
     public static void main(String[] args) {
-        int decisionAttributePosition;
         String trainingDatasetFileName;
         String testDatasetFileName;
 
-        if (args.length != 3) {
+        if (args.length != 2) {
             throw new IllegalArgumentException("""
                     
                     Wrong number of arguments, please provide:
-                    > Decision attribute position;
                     > Name of the file with the csv training data;
                     > Name of the file with the csv test data;
                                         
@@ -24,18 +22,27 @@ public class UserInterface {
                                  the "data" directory for the program to work.""");
         }
         else {
-            decisionAttributePosition = Integer.parseInt(args[0]);
-            trainingDatasetFileName = "data/" + args[1];
-            testDatasetFileName = "data/" + args[2];
+            trainingDatasetFileName = "data/" + args[0];
+            testDatasetFileName = "data/" + args[1];
         }
 
         trainingDataSamples = DataProcessor.parseDataFromCsv(trainingDatasetFileName);
         testDataSamples = DataProcessor.parseDataFromCsv(testDatasetFileName);
 
-        NaiveBayes.trainProbabilityMap(trainingDataSamples, decisionAttributePosition);
+        NaiveBayes.trainProbabilityMap(trainingDataSamples);
 
-        double accuracy = NaiveBayes.produceAccuracy(testDataSamples, decisionAttributePosition);
+        double[][] accuracyMatrix = NaiveBayes.produceAccuracyMatrix(testDataSamples);
 
-        System.out.println(accuracy);
+        for (int i = 0; i < NaiveBayes.typeList.size(); i++) {
+            System.out.printf("""
+                    Class %s:
+                    Accuracy: %.2f%%
+                    Precision: %.2f%%
+                    Recall: %.2f%%
+                    F-Measure: %.2f%%
+                    
+                    """, NaiveBayes.typeList.get(i), accuracyMatrix[i][0], accuracyMatrix[i][1],
+                    accuracyMatrix[i][2], accuracyMatrix[i][3]);
+        }
     }
 }
