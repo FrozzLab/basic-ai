@@ -73,36 +73,35 @@ public class NaiveBayes {
         }
 
         typeList = new ArrayList<>(typeCountMap.keySet());
-        int[][] confusionMatrix = new int[typeList.size()][typeList.size()];
-
         typeList.replaceAll(s -> s.split("_")[1]);
+        int[][] confusionMatrix = new int[typeList.size()][typeList.size()];
 
         for (int i = 0; i < predictionList.size(); i++)
             confusionMatrix[typeList.indexOf(expectedList.get(i))][typeList.indexOf(predictionList.get(i))] += 1;
 
         double[][] accuracyMatrix = new double[typeList.size()][4];
 
-        for (int t = 0; t < typeList.size(); t++) {
+        for (int typeIndex = 0; typeIndex < typeList.size(); typeIndex++) {
             int TP = 0, TN = 0, FN = 0, FP = 0;
 
             for (int i = 0; i < confusionMatrix.length; i++) {
                 for (int j = 0; j < confusionMatrix.length; j++) {
-                    if (i == t && j == t)
+                    if (i == typeIndex && j == typeIndex)
                         TP = confusionMatrix[i][j];
-                    else if (i == t)
+                    else if (i == typeIndex)
                         FN += confusionMatrix[i][j];
-                    else if (j == t)
+                    else if (j == typeIndex)
                         FP += confusionMatrix[i][j];
                     else
                         TN += confusionMatrix[i][j];
                 }
             }
 
-            accuracyMatrix[t][0] = (double) (TP + TN) / (TP + TN + FP + FN) * 100;
-            accuracyMatrix[t][1] = (double) TP / (TP + FP) * 100;
-            accuracyMatrix[t][2] = (double) TP / (TP + FN) * 100;
-            accuracyMatrix[t][3] = (2 * accuracyMatrix[t][1] * accuracyMatrix[t][2])
-                    / (accuracyMatrix[t][1] + accuracyMatrix[t][2]);
+            accuracyMatrix[typeIndex][0] = (double) (TP + TN) / (TP + TN + FP + FN) * 100;
+            accuracyMatrix[typeIndex][1] = (double) TP / (TP + FP) * 100;
+            accuracyMatrix[typeIndex][2] = (double) TP / (TP + FN) * 100;
+            accuracyMatrix[typeIndex][3] = (2 * accuracyMatrix[typeIndex][1] * accuracyMatrix[typeIndex][2])
+                    / (accuracyMatrix[typeIndex][1] + accuracyMatrix[typeIndex][2]);
         }
 
         return accuracyMatrix;

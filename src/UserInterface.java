@@ -10,13 +10,15 @@ public class UserInterface {
     public static void main(String[] args) {
         String trainingDatasetFileName;
         String testDatasetFileName;
+        int decisionAttributePosition;
 
-        if (args.length != 2) {
+        if (args.length != 3) {
             throw new IllegalArgumentException("""
                     
                     Wrong number of arguments, please provide:
                     > Name of the file with the csv training data;
                     > Name of the file with the csv test data;
+                    > Position of the decision attribute;
                                         
                     --- Note --- The aforementioned files have to be placed in
                                  the "data" directory for the program to work.""");
@@ -24,10 +26,11 @@ public class UserInterface {
         else {
             trainingDatasetFileName = "data/" + args[0];
             testDatasetFileName = "data/" + args[1];
+            decisionAttributePosition = Integer.parseInt(args[2]);
         }
 
-        trainingDataSamples = DataProcessor.parseDataFromCsv(trainingDatasetFileName);
-        testDataSamples = DataProcessor.parseDataFromCsv(testDatasetFileName);
+        trainingDataSamples = DataProcessor.parseDataFromCsv(trainingDatasetFileName, decisionAttributePosition);
+        testDataSamples = DataProcessor.parseDataFromCsv(testDatasetFileName, decisionAttributePosition);
 
         NaiveBayes.trainProbabilityMap(trainingDataSamples);
 

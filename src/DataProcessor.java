@@ -9,8 +9,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DataProcessor {
-    public static List<DataSample> parseDataFromCsv(String filePath) {
+    static int _decisionAttributePosition;
+
+    public static List<DataSample> parseDataFromCsv(String filePath, int decisionAttributePosition) {
         List<DataSample> parsedSamples = new ArrayList<>();
+        _decisionAttributePosition = decisionAttributePosition;
 
         try {
             parsedSamples = Files.lines(Path.of(filePath))
@@ -27,8 +30,8 @@ public class DataProcessor {
     private static final Function<String, DataSample> parseLineToSample = (line) -> {
         List<String> parametersAsString = new ArrayList<>(List.of(line.split(",")));
 
-        String decisionParameterAsString = parametersAsString.get(0);
-        parametersAsString.remove(0);
+        String decisionParameterAsString = parametersAsString.get(_decisionAttributePosition);
+        parametersAsString.remove(_decisionAttributePosition);
 
         return new DataSample(parametersAsString, decisionParameterAsString);
     };
