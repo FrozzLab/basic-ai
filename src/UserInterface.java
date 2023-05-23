@@ -1,10 +1,13 @@
 import objects.ItemSet;
+import objects.ResultContainer;
 
 public class UserInterface {
 
     static ItemSet itemSet;
+    static ResultContainer resultContainer;
 
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         String datasetFileName;
 
         if (args.length != 1) {
@@ -21,7 +24,10 @@ public class UserInterface {
         }
 
         itemSet = DataProcessor.processFileIntoItemSet(datasetFileName);
+        resultContainer = Knapsack.findOptimalSolutionUsingBruteForce(itemSet);
+        long stopTime = System.currentTimeMillis();
 
-        System.out.println(itemSet);
+        System.out.printf("Compute time: %.2f sec\n", ((stopTime - startTime) / 1000.));
+        System.out.print(resultContainer);
     }
 }

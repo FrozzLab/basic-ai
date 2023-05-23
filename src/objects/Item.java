@@ -9,11 +9,16 @@ public class Item {
         this.weight = weight;
     }
 
+    public int getValue() {
+        return value;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
     @Override
     public String toString() {
-        return "Item{" +
-                "value=" + value +
-                ", weight=" + weight +
-                '}';
+        return "{value = " + value + ", weight = " + weight + "}";
     }
 }
